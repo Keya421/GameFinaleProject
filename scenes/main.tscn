@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://bxraihmghxjtl"]
+
+[ext_resource type="Texture2D" uid="uid://cws2cghuv6u4w" path="res://assets/mikudayo.png" id="1_0wfyh"]
+[ext_resource type="Script" uid="uid://baf2xy1molrhw" path="res://scripts/player.gd" id="2_sugp2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noarx"]
+albedo_color = Color(0.6556657, 0.6556657, 0.6556657, 0.9490196)
+uv1_scale = Vector3(2.31, 2.31, 2.31)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a0tk4"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+sky_cover = ExtResource("1_0wfyh")
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_r3fl7"]
+sky_material = SubResource("ProceduralSkyMaterial_a0tk4")
+
+[sub_resource type="Environment" id="Environment_jka67"]
+background_mode = 2
+sky = SubResource("Sky_r3fl7")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jyhfs"]
+
+[node name="world" type="Node3D" unique_id=1046135076]
+
+[node name="stage" type="Node3D" parent="." unique_id=1049066872]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="stage" unique_id=1156465961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(20, 1, 20)
+material = SubResource("StandardMaterial3D_noarx")
+
+[node name="env" type="Node3D" parent="." unique_id=156687043]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="env" unique_id=1551993169]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="env" unique_id=1275507052]
+environment = SubResource("Environment_jka67")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1118369035]
+script = ExtResource("2_sugp2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1009346516]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_jyhfs")
+
+[node name="Head" type="Node3D" parent="Player" unique_id=55769533]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/Head" unique_id=2088545693]
