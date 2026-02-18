@@ -3,6 +3,11 @@ extends CharacterBody3D
 @onready var head: Node3D = $Head
 @onready var camera_3d: Camera3D = $Head/Camera3D
 
+@export var speed : float = 5.0
+@export var dash_speed : float = 20.0
+@export var dash_duration : float = 0.2
+@export var dash_cooldown : float = 1.0
+
 
 var current_speed = 5.0
 var walking_speed = 5.0
@@ -51,4 +56,6 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, current_speed)
 		velocity.z = move_toward(velocity.z, 0, current_speed)
 
+
 	move_and_slide()
+	
