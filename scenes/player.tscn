@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://6tbobn2vv8hm"]
+
+[ext_resource type="Script" uid="uid://baf2xy1molrhw" path="res://scripts/player.gd" id="1_3vyb7"]
+[ext_resource type="AudioStream" uid="uid://dcer34d35pmqc" path="res://sounds/spring.mp3" id="2_g2els"]
+[ext_resource type="AudioStream" uid="uid://paxovhkp3fah" path="res://sounds/dash_red_left.mp3" id="3_qhqgy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jyhfs"]
+
+[node name="Player" type="CharacterBody3D" unique_id=427008523]
+script = ExtResource("1_3vyb7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=694205380]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_jyhfs")
+
+[node name="Head" type="Node3D" parent="." unique_id=2133244495]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=1024335273]
+fov = 90.0
+
+[node name="sfx_jump" type="AudioStreamPlayer3D" parent="." unique_id=1259692156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4444714, 0)
+stream = ExtResource("2_g2els")
+
+[node name="sfx_dash" type="AudioStreamPlayer3D" parent="." unique_id=776665604]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4566009, 0)
+stream = ExtResource("3_qhqgy")
+volume_db = -20.833

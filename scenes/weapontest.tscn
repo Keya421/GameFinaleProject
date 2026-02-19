@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dh52cqp7xucj0"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_btosk"]
+
+[node name="Weapontest" type="Node3D" unique_id=1566464812]
+
+[node name="Weapon" type="Node3D" parent="." unique_id=463092873]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Weapon" unique_id=1446396985]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Weapon/RigidBody3D" unique_id=1917858042]
+shape = SubResource("SphereShape3D_btosk")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Weapon" unique_id=1998135632]
+transform = Transform3D(0.7654725, 0, 0, 0, 0.18277633, 0, 0, 0, 0.21569908, 0, 0, 0)

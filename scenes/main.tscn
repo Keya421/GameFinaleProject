@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://bxraihmghxjtl"]
 
 [ext_resource type="Texture2D" uid="uid://cws2cghuv6u4w" path="res://assets/mikudayo.png" id="1_0wfyh"]
-[ext_resource type="Script" uid="uid://baf2xy1molrhw" path="res://scripts/player.gd" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://6tbobn2vv8hm" path="res://scenes/player.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://dh52cqp7xucj0" path="res://scenes/weapontest.tscn" id="3_sugp2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noarx"]
 albedo_color = Color(0.6556657, 0.6556657, 0.6556657, 0.9490196)
+albedo_texture = ExtResource("1_0wfyh")
 uv1_scale = Vector3(2.31, 2.31, 2.31)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a0tk4"]
@@ -21,14 +23,24 @@ sky = SubResource("Sky_r3fl7")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jyhfs"]
-
 [node name="world" type="Node3D" unique_id=1046135076]
 
 [node name="stage" type="Node3D" parent="." unique_id=1049066872]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="stage" unique_id=1156465961]
-transform = Transform3D(6.5631843, 0, 0, 0, 1, 0, 0, 0, 1, 47.09437, -0.5, 0)
+transform = Transform3D(1.5415792, 0, 0, 0, 1, 0, 0, 0, 1, 34.155594, -0.5, 0)
+use_collision = true
+size = Vector3(6.9748535, 1, 20)
+material = SubResource("StandardMaterial3D_noarx")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="stage/CSGBox3D" unique_id=1095142924]
+transform = Transform3D(1.5415792, 0, 0, 0, 1, 0, 0, 0, 1, 47.09437, -0.5, 0)
+use_collision = true
+size = Vector3(34.351074, 1, 20)
+material = SubResource("StandardMaterial3D_noarx")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="stage/CSGBox3D/CSGBox3D" unique_id=1034494792]
+transform = Transform3D(1.5415792, 0, 0, 0, 1, 0, 0, 0, 1, 47.09437, -0.5, 0)
 use_collision = true
 size = Vector3(34.351074, 1, 20)
 material = SubResource("StandardMaterial3D_noarx")
@@ -42,14 +54,8 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="env" unique_id=1275507052]
 environment = SubResource("Environment_jka67")
 
-[node name="Player" type="CharacterBody3D" parent="." unique_id=1118369035]
-script = ExtResource("2_sugp2")
+[node name="Weapontest" parent="." unique_id=1566464812 instance=ExtResource("3_sugp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.895278, 1.8072956, -1.3738303)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1009346516]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_jyhfs")
-
-[node name="Head" type="Node3D" parent="Player" unique_id=55769533]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Player/Head" unique_id=2088545693]
+[node name="Player" parent="." unique_id=427008523 instance=ExtResource("2_0wfyh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.993416, 0.16651154, -0.04564476)
