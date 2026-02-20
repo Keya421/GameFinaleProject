@@ -1,5 +1,6 @@
 extends CharacterBody3D
-# get them sound effects ready
+
+
 @onready var sfx_jump: AudioStreamPlayer3D = $sfx_jump
 @onready var sfx_dash: AudioStreamPlayer3D = $sfx_dash
 
@@ -30,6 +31,7 @@ extends CharacterBody3D
 @export var tilt_speed : float = 15.0
 @export var slide_tilt_multiplier : float = 1.8
 
+
 # mouse sensitivity, not changable yet
 const mouse_sens = 0.4
 
@@ -39,8 +41,9 @@ var sliding = false
 var is_dashing = false
 var can_dash = true
 var jumps_left = 2
-
+var dashes_left = 3
 # sets current camera tilt to zero obviously thats the basic !
+
 var current_tilt : float = 0.0
 
 # also dash timer. who did this
@@ -76,7 +79,7 @@ func _physics_process(delta: float) -> void:
 #reset jumps to zero when you touch the floor
 	if is_on_floor():
 		jumps_left = 2
-		
+		dashes_left = 3
 	# jump
 	if Input.is_action_just_pressed("jump") and jumps_left > 0:
 		velocity.y = jump_velocity
@@ -137,11 +140,13 @@ func start_dash():
 	var input_dir := Input.get_vector("left", "right", "up", "down")
 	var dash_dir = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
-	if dash_dir == Vector3.ZERO:
+	if dash_dir == Vector3.ZERO and dashes_left > 0:
 		dash_dir = -head.global_transform.basis.z
-
+		
 	velocity.x = dash_dir.x * dash_speed
 	velocity.z = dash_dir.z * dash_speed
+	
+	
 	sfx_dash.play()
 
 	dash_timer.start(dash_duration)
