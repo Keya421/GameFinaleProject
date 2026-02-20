@@ -12,8 +12,10 @@ extends CharacterBody3D
 # movement variables
 @export var walking_speed : float = 6.0
 @export var sprinting_speed : float = 11.0
-@export var slide_speed : float = 14.0
+@export var slide_speed : float = 24.0
 @export var jump_velocity : float = 5.0
+
+@export var jump_velocity_wall : float = 20.0
 
 # acceleration variables, very annoying probably redundant
 @export var ground_acceleration : float = 25.0
@@ -25,6 +27,7 @@ extends CharacterBody3D
 @export var dash_speed : float = 25.0
 @export var dash_duration : float = 0.2
 @export var dash_cooldown : float = 0.4
+
 
 # camera tilt variables
 @export var max_tilt_angle : float = 5.0
@@ -41,6 +44,7 @@ var sliding = false
 var is_dashing = false
 var can_dash = true
 var jumps_left = 2
+var max_jumps = 2
 var dashes_left = 3
 # sets current camera tilt to zero obviously thats the basic !
 
@@ -76,20 +80,28 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y -= 9.8 * gravity_multiplier * delta
 		
-#reset jumps to zero when you touch the floor
+#reset jumps to 2 when you touch the floor
 	if is_on_floor():
-		jumps_left = 2
-		dashes_left = 3
+		jumps_left = max_jumps
+	
+	# jump wall
+	if Input.is_action_just_pressed("jump") and jumps_left > 0 and is_on_wall():
+		jumps_left -= 1 
+		velocity.y += jump_velocity_wall
+		sfx_jump.pitch_scale = 1.1
+		sfx_jump.play() 
+		
 	# jump
 	if Input.is_action_just_pressed("jump") and jumps_left > 0:
 		velocity.y = jump_velocity
 		jumps_left -= 1
+		sfx_jump.pitch_scale = 1 
 		sfx_jump.play()
 		
 		# slide jump carries momentum. this shit gets crazy
 		if sliding:
-			velocity.x *= 1.8
-			velocity.z *= 1.8
+			velocity.x *= 1.7
+			velocity.z *= 1.7
 
 	# dashing
 	if Input.is_action_just_pressed("dash") and can_dash and not sliding:
@@ -104,9 +116,7 @@ func _physics_process(delta: float) -> void:
 
 		if not sliding:
 			sliding = true
-
 		current_speed = slide_speed
-
 		velocity.x = move_toward(velocity.x, move_dir.x * slide_speed, 4.0 * delta)
 		velocity.z = move_toward(velocity.z, move_dir.z * slide_speed, 4.0 * delta)
 
@@ -146,9 +156,9 @@ func start_dash():
 	velocity.x = dash_dir.x * dash_speed
 	velocity.z = dash_dir.z * dash_speed
 	
-	
 	sfx_dash.play()
 
+	
 	dash_timer.start(dash_duration)
 
 func _on_dash_timer_timeout():
@@ -177,6 +187,11 @@ func handle_camera_tilt(delta):
 	camera_3d.rotation_degrees.z = current_tilt
 
 
-
-	
-	
+	if Input.is_action_just_pressed("upgrade_test"):
+			dash_speed += 3
+			
+	if Input.is_action_just_pressed("upgrade_test"):
+			max_jumps += 1 
+			
+	if Input.is_action_just_pressed("upgrade_test"):
+			jump_velocity += 1 

@@ -12,10 +12,10 @@ func _process(_delta: float) -> void:
 	var speed = velocity.length() 
 	text = "Health: " + str(int(health))
 	
-	if speed < 1.0 and health > 0:
+	if speed < 10.0 and health > 0:
 		health -= drain_rate * _delta
 	
-	if speed > 10.0 and health > 0:
+	if speed > 40.0 and health > 0:
 		health += gain_rate * _delta
 		
 	if health < 1:
